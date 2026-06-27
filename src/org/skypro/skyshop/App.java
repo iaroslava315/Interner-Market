@@ -5,7 +5,7 @@ import org.skypro.skyshop.product.Product;
 
 public class App {
 
-    public static void main() {
+    public static void main(String[] args) {
 
         Product p1 = new Product("Платье", 200);
         Product p2 = new Product("Сандали", 500);
@@ -57,12 +57,6 @@ public class App {
         } else {
             System.out.println("Такого продукта в корзине нет.");
         }
-
-
-
-
-
-
 
 
     }
