@@ -63,6 +63,14 @@ public class ProductBasket {
         return false;
     }
 
+    public void checkMethodCheckProduct(String productName) {
+        if (this.checkProduct(productName)) {
+            System.out.println("В корзине есть такой продукт.");
+        } else {
+            System.out.println("Такого продукта в корзине нет.");
+        }
+    }
+
 
     public void cleanBasket() {
         for (int i = 0; i < basket.length; i++) {

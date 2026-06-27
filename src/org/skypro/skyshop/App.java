@@ -32,18 +32,10 @@ public class App {
         System.out.println("Получение стоимости корзины с несколькими товарами: " + b1.countSum());
 
         System.out.println("Поиск товара, который есть в корзине:");
-        if (b1.checkProduct("Блуза")) {
-            System.out.println("В корзине есть такой продукт.");
-        } else {
-            System.out.println("Такого продукта в корзине нет.");
-        }
+        b1.checkMethodCheckProduct("Блуза");
 
         System.out.println("Поиск товара, которого нет в корзине:");
-        if (b1.checkProduct("Брюки")) {
-            System.out.println("В корзине есть такой продукт.");
-        } else {
-            System.out.println("Такого продукта в корзине нет.");
-        }
+        b1.checkMethodCheckProduct("Брюки");
 
         System.out.println("Очистка корзины. Печать содержимого пустой корзины:");
         b1.cleanBasket();
@@ -52,12 +44,6 @@ public class App {
         System.out.println("Получение стоимости пустой корзины: " + b1.countSum());
 
         System.out.println("Поиск товара по имени в пустой корзине: ");
-        if (b1.checkProduct("Блуза")) {
-            System.out.println("В корзине есть такой продукт.");
-        } else {
-            System.out.println("Такого продукта в корзине нет.");
-        }
-
-
+        b1.checkMethodCheckProduct("Блуза");
     }
 }
