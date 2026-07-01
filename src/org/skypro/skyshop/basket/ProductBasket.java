@@ -34,9 +34,13 @@ public class ProductBasket {
 
     public void showBasket() {
         int count = 0;
+        int specialCount = 0;
         for (Product element : basket) {
             if (element != null) {
-                System.out.println(element.getName() + ": " + element.getPrice());
+                System.out.println(element.toString());
+                if (element.isSpecial()) {
+                    specialCount++;
+                }
                 count++;
             }
         }
@@ -44,6 +48,7 @@ public class ProductBasket {
             System.out.println("В корзине пусто");
         } else {
             System.out.println("Итого: " + totalPrice);
+            System.out.println("Специальных товаров: " + specialCount);
         }
     }
 
