@@ -32,18 +32,29 @@ public class ProductBasket {
         return basketPrice;
     }
 
+    public int countSpecialProducts() {
+        int count = 0;
+        for (Product element : basket) {
+            if (element != null && element.isSpecial()){
+                count++;
+            }
+        }
+        return count;
+    }
+
     public void showBasket() {
         int count = 0;
         for (Product element : basket) {
             if (element != null) {
-                System.out.println(element.getName() + ": " + element.getPrice());
-                count++;
+                System.out.println(element.toString());
+            count++;
             }
         }
         if (count == 0) {
             System.out.println("В корзине пусто");
         } else {
             System.out.println("Итого: " + totalPrice);
+            System.out.println("Специальных товаров: " + countSpecialProducts());
         }
     }
 
