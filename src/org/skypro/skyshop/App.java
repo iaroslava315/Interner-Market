@@ -1,10 +1,10 @@
 package org.skypro.skyshop;
 
+import org.skypro.skyshop.Searchable.SearchEngine;
+import org.skypro.skyshop.Searchable.Searchable;
 import org.skypro.skyshop.basket.ProductBasket;
-import org.skypro.skyshop.product.DiscountedProduct;
-import org.skypro.skyshop.product.FixPriceProduct;
-import org.skypro.skyshop.product.Product;
-import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.product.*;
+
 
 public class App {
 
@@ -49,5 +49,37 @@ public class App {
         System.out.println("Поиск товара по имени в пустой корзине: ");
         b1.checkMethodCheckProduct("Блуза");
 
+
+        SearchEngine search = new SearchEngine(10);
+        search.add(p1);
+        search.add(p2);
+        search.add(p3);
+        search.add(p4);
+        search.add(p5);
+        search.add(p6);
+
+        Article a1 = new Article("Платье", "Черное, шелковое, миди");
+        Article a2 = new Article("Шляпа", "Летняя, соломенная, с большими бортами");
+        search.add(a1);
+        search.add(a2);
+
+        Searchable[] results = search.search("Платье");
+        System.out.println("Результаты поиска для 'Платье'");
+        for (Searchable element : results) {
+            if (element != null) {
+                System.out.println(element.getStringRepresentation());
+            }
+        }
+
+        results = search.search("Шляпа");
+        System.out.println("Результаты поиска для 'Шляпа'");
+        for (Searchable e : results) {
+            if (e != null) {
+                System.out.println(e.getStringRepresentation());
+            }
+        }
+
+
     }
+
 }
