@@ -35,7 +35,7 @@ public class ProductBasket {
     public int countSpecialProducts() {
         int count = 0;
         for (Product element : basket) {
-            if (element != null && element.isSpecial()){
+            if (element != null && element.isSpecial()) {
                 count++;
             }
         }
@@ -47,7 +47,7 @@ public class ProductBasket {
         for (Product element : basket) {
             if (element != null) {
                 System.out.println(element.toString());
-            count++;
+                count++;
             }
         }
         if (count == 0) {
