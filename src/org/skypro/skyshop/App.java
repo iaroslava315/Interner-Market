@@ -1,7 +1,8 @@
 package org.skypro.skyshop;
 
-import org.skypro.skyshop.Searchable.SearchEngine;
-import org.skypro.skyshop.Searchable.Searchable;
+import org.skypro.skyshop.exception.BestResultNotFound;
+import org.skypro.skyshop.searchable.SearchEngine;
+import org.skypro.skyshop.searchable.Searchable;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.*;
 
@@ -10,12 +11,59 @@ public class App {
 
     public static void main(String[] args) {
 
-        Product p1 = new SimpleProduct("Платье", 200);
+
+        try {
+            Product p15 = new SimpleProduct(" ", 200);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Возникла ошибка: " + e.getMessage());
+        }
+
+        try {
+            Product p22 = new SimpleProduct("Сандали", -500);
+        } catch (IllegalArgumentException b) {
+            System.out.println("Возникла ошибка: " + b.getMessage());
+        }
+
+        try {
+            Product p33 = new DiscountedProduct("Панама", 100, 120);
+        } catch (IllegalArgumentException c) {
+            System.out.println("Возникла ошибка: " + c.getMessage());
+        }
+
+        Product p1 = new SimpleProduct("Платье ", 200);
         Product p2 = new SimpleProduct("Сандали", 500);
         Product p3 = new DiscountedProduct("Панама", 100, 5);
         Product p4 = new FixPriceProduct("Шляпа");
         Product p5 = new DiscountedProduct("Блуза", 300, 15);
         Product p6 = new FixPriceProduct("Тапочки");
+        Article a1 = new Article("Платье", "Черное, шелковое, миди");
+        Article a2 = new Article("Шляпа", "Летняя, соломенная, с большими бортами");
+
+        SearchEngine search = new SearchEngine(10);
+        search.add(p1);
+        search.add(p2);
+        search.add(p3);
+        search.add(p4);
+        search.add(p5);
+        search.add(p6);
+        search.add(a1);
+        search.add(a2);
+
+        System.out.println("Демонстрация нового метода поиска");
+
+        try {
+            Searchable result = search.searchBestResult("Пла");
+            System.out.println("Результаты поиска для 'Пла': " + result);
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            Searchable result = search.searchBestResult("Хлеб");
+            System.out.println("Результаты поиска для 'Хлеб': " + result);
+        } catch (BestResultNotFound b) {
+            System.out.println(b.getMessage());
+        }
 
 
         ProductBasket b1 = new ProductBasket();
@@ -50,19 +98,7 @@ public class App {
         b1.checkMethodCheckProduct("Блуза");
 
 
-        SearchEngine search = new SearchEngine(10);
-        search.add(p1);
-        search.add(p2);
-        search.add(p3);
-        search.add(p4);
-        search.add(p5);
-        search.add(p6);
-
-        Article a1 = new Article("Платье", "Черное, шелковое, миди");
-        Article a2 = new Article("Шляпа", "Летняя, соломенная, с большими бортами");
-        search.add(a1);
-        search.add(a2);
-
+        System.out.println("Демонстрация поиска");
         Searchable[] results = search.search("Платье");
         System.out.println("Результаты поиска для 'Платье'");
         for (Searchable element : results) {
@@ -81,5 +117,4 @@ public class App {
 
 
     }
-
 }
