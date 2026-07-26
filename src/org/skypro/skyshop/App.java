@@ -5,6 +5,7 @@ import org.skypro.skyshop.searchable.SearchEngine;
 import org.skypro.skyshop.searchable.Searchable;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.*;
+import java.util.List;
 
 
 public class App {
@@ -30,22 +31,24 @@ public class App {
             System.out.println("Возникла ошибка: " + c.getMessage());
         }
 
-        Product p1 = new SimpleProduct("Платье ", 200);
+        Product p1 = new SimpleProduct("Платье", 200);
         Product p2 = new SimpleProduct("Сандали", 500);
         Product p3 = new DiscountedProduct("Панама", 100, 5);
         Product p4 = new FixPriceProduct("Шляпа");
         Product p5 = new DiscountedProduct("Блуза", 300, 15);
         Product p6 = new FixPriceProduct("Тапочки");
+        Product p7 = new FixPriceProduct("Панама");
         Article a1 = new Article("Платье", "Черное, шелковое, миди");
         Article a2 = new Article("Шляпа", "Летняя, соломенная, с большими бортами");
 
-        SearchEngine search = new SearchEngine(10);
+        SearchEngine search = new SearchEngine();
         search.add(p1);
         search.add(p2);
         search.add(p3);
         search.add(p4);
         search.add(p5);
         search.add(p6);
+        search.add(p7);
         search.add(a1);
         search.add(a2);
 
@@ -68,53 +71,70 @@ public class App {
 
         ProductBasket b1 = new ProductBasket();
 
+
         System.out.println("Добавление продукта в корзину:");
         b1.addProduct(p1);
         b1.addProduct(p2);
         b1.addProduct(p3);
         b1.addProduct(p4);
         b1.showBasket();
-
         System.out.println("Добавление продукта в заполненную корзину, в которой нет свободного места:");
         b1.addProduct(p5);
         b1.addProduct(p6);
+        b1.addProduct(p7);
         b1.showBasket();
-
         System.out.println("Получение стоимости корзины с несколькими товарами: " + b1.countSum());
-
         System.out.println("Поиск товара, который есть в корзине:");
         b1.checkMethodCheckProduct("Панама");
-
         System.out.println("Поиск товара, которого нет в корзине:");
         b1.checkMethodCheckProduct("Брюки");
 
+
+        System.out.println("-----------------------------------------------------");
+        System.out.println("Удаление продукта по имени:");
+        List<Product> deletedProducts = b1.deleteProductByName("Панама");
+        if (deletedProducts.isEmpty()) {
+            System.out.println("Список пуст");
+        } else {
+            System.out.println("Удалённые продукты:" + deletedProducts);
+        }
+        System.out.println("Вывод содержимого корзины после удаления существующего продукта:");
+        b1.showBasket();
+
+        System.out.println("Удаление несуществующего продукта:");
+        List<Product> deletedProducts2 = b1.deleteProductByName("Хлеб");
+        if (deletedProducts2.isEmpty()) {
+            System.out.println("Список пуст");
+        } else {
+            System.out.println("Удалённые продукты:" + deletedProducts2);
+        }
+        System.out.println("Вывод содержимого корзины после удаления несуществующего продукта:");
+        b1.showBasket();
+
+        System.out.println("Демонстрация поиска");
+        System.out.println("Результаты поиска для 'Платье': ");
+        List<Searchable> results1 = search.search("Платье");
+        if (results1.isEmpty()) {
+            System.out.println("Совпадений не найдено");
+        } else {
+            System.out.println(results1);
+        }
+
+        System.out.println("Результаты поиска для 'Хлеб': ");
+        List<Searchable> results = search.search("Хлеб");
+        if (results.isEmpty()) {
+            System.out.println("Совпадений не найдено");
+        } else {
+            System.out.println(results);
+        }
+
+
+        System.out.println("-----------------------------------------------------");
         System.out.println("Очистка корзины. Печать содержимого пустой корзины:");
         b1.cleanBasket();
         b1.showBasket();
-
         System.out.println("Получение стоимости пустой корзины: " + b1.countSum());
-
         System.out.println("Поиск товара по имени в пустой корзине: ");
         b1.checkMethodCheckProduct("Блуза");
-
-
-        System.out.println("Демонстрация поиска");
-        Searchable[] results = search.search("Платье");
-        System.out.println("Результаты поиска для 'Платье'");
-        for (Searchable element : results) {
-            if (element != null) {
-                System.out.println(element.getStringRepresentation());
-            }
-        }
-
-        results = search.search("Шляпа");
-        System.out.println("Результаты поиска для 'Шляпа'");
-        for (Searchable e : results) {
-            if (e != null) {
-                System.out.println(e.getStringRepresentation());
-            }
-        }
-
-
     }
 }
