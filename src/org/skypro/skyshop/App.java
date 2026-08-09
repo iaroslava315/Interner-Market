@@ -5,6 +5,7 @@ import org.skypro.skyshop.searchable.SearchEngine;
 import org.skypro.skyshop.searchable.Searchable;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.*;
+
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -112,7 +113,6 @@ public class App {
         }
         System.out.println("Вывод содержимого корзины после удаления несуществующего продукта:");
         b1.showBasket();
-
 
 
         System.out.println("-------------------------------------------------------");
