@@ -2,39 +2,39 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class ProductBasket {
 
-    List<Product> basket = new LinkedList<>();
+    Map<String, List<Product>> basket = new HashMap<>();
     private int totalPrice = 0;
 
     public void addProduct(Product product) {
-        basket.add(product);
+        basket.computeIfAbsent(product.getName(), k -> new ArrayList<>()).add(product);
         totalPrice += product.getPrice();
     }
 
     public List<Product> deleteProductByName(String name) {
-        List<Product> deletedProducts = new LinkedList<>();
-        Iterator<Product> iterator = basket.iterator();
-        while (iterator.hasNext()) {
-            Product product = iterator.next();
-            if (product.getName().equals(name)) {
-                deletedProducts.add(product);
-                iterator.remove();
+        List<Product> deletedProducts = basket.remove(name);
+        if (deletedProducts != null) {
+            for (Product product : deletedProducts) {
                 totalPrice -= product.getPrice();
             }
         }
-        return deletedProducts;
+        if (deletedProducts == null) {
+            return Collections.emptyList();
+        } else {
+            return deletedProducts;
+        }
     }
 
     public int countSum() {
         int basketPrice = 0;
-        for (Product element : basket) {
-            if (element != null) {
-                basketPrice = basketPrice + element.getPrice();
+        for (List<Product> productList : basket.values()) {
+            for (Product element : productList) {
+                if (element != null) {
+                    basketPrice += element.getPrice();
+                }
             }
         }
         return basketPrice;
@@ -42,9 +42,11 @@ public class ProductBasket {
 
     public int countSpecialProducts() {
         int count = 0;
-        for (Product element : basket) {
-            if (element != null && element.isSpecial()) {
-                count++;
+        for (List<Product> productList : basket.values()) {
+            for (Product product : productList) {
+                if (product.isSpecial()) {
+                    count++;
+                }
             }
         }
         return count;
@@ -52,9 +54,11 @@ public class ProductBasket {
 
     public void showBasket() {
         int count = 0;
-        for (Product element : basket) {
-            if (element != null) {
-                System.out.println(element.toString());
+        for (List<Product> productList : basket.values()) {
+            if (productList != null) {
+                for (Product product : productList) {
+                    System.out.println(product);
+                }
                 count++;
             }
         }
@@ -68,11 +72,13 @@ public class ProductBasket {
 
     public boolean checkProduct(String name) {
         boolean isEmpty = true;
-        for (Product element : basket) {
-            if (element != null) {
+        for (List<Product> productList : basket.values()) {
+            if (productList != null) {
                 isEmpty = false;
-                if (element.getName().equals(name)) {
-                    return true;
+                for (Product product : productList) {
+                    if (product.getName().equals(name)) {
+                        return true;
+                    }
                 }
             }
         }
