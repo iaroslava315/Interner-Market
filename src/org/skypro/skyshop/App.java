@@ -5,7 +5,10 @@ import org.skypro.skyshop.searchable.SearchEngine;
 import org.skypro.skyshop.searchable.Searchable;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.*;
+
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 public class App {
@@ -111,21 +114,29 @@ public class App {
         System.out.println("Вывод содержимого корзины после удаления несуществующего продукта:");
         b1.showBasket();
 
+
+        System.out.println("-------------------------------------------------------");
         System.out.println("Демонстрация поиска");
         System.out.println("Результаты поиска для 'Платье': ");
-        List<Searchable> results1 = search.search("Платье");
+        Map<String, Searchable> results1 = search.search("Платье");
         if (results1.isEmpty()) {
             System.out.println("Совпадений не найдено");
         } else {
-            System.out.println(results1);
+            for (String key : results1.keySet()) {
+                Searchable value = results1.get(key);
+                System.out.println(value);
+            }
         }
 
         System.out.println("Результаты поиска для 'Хлеб': ");
-        List<Searchable> results = search.search("Хлеб");
+        Map<String, Searchable> results = search.search("Хлеб");
         if (results.isEmpty()) {
             System.out.println("Совпадений не найдено");
         } else {
-            System.out.println(results);
+            for (String key : results.keySet()) {
+                Searchable value = results.get(key);
+                System.out.println(value);
+            }
         }
 
 
